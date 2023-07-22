@@ -1,0 +1,187 @@
+%PDF-1.3
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/Annots []
+/Contents 4 0 R>>
+endobj
+4 0 obj
+<</Length 7779>>
+stream
+q
+1.000 0.000 0.000 -1.000 0.000 841.890 cm
+2 J
+0.57 w
+BT /F1 10.00 Tf ET
+0 G
+0 g
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 37.02 Tm 0 Tr ( 1  ) Tj  ET Q
+q 0.000 0.627 0.000 rg BT 1 0 0 -1 52.35 37.02 Tm 0 Tr (#include <stdio.h>) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 48.35 Tm 0 Tr ( 2  ) Tj  ET Q
+q 0.000 0.627 0.000 rg BT 1 0 0 -1 52.35 48.35 Tm 0 Tr (#include <stdlib.h>) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 59.69 Tm 0 Tr ( 3  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 59.69 Tm 0 Tr (/*) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 71.03 Tm 0 Tr ( 4  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 71.03 Tm 0 Tr (Para a pesquisa sequencial em uma estrutura com N elementos, quantos elementos serão) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 82.37 Tm 0 Tr (testados no melhor caso? E no pior caso? E para a pesquisa binária?) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 93.71 Tm 0 Tr ( 5  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 93.71 Tm 0 Tr (A pesquisa binária é sempre mais eficiente do que a pesquisa sequencial? Demonstre) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 105.05 Tm 0 Tr (com exemplos os casos em que uma pode ser mais interessante que a outra) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 116.39 Tm 0 Tr ( 6  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 116.39 Tm 0 Tr (*/) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 127.72 Tm 0 Tr ( 7  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 139.06 Tm 0 Tr ( 8  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 139.06 Tm 0 Tr (/*) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 150.40 Tm 0 Tr ( 9  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 52.35 150.40 Tm 0 Tr (      ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 88.35 150.40 Tm 0 Tr (BUSCA SEQUENCIAL) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 161.74 Tm 0 Tr (10  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 161.74 Tm 0 Tr (Melgor caso= 1 elemento) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 173.08 Tm 0 Tr (11  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 173.08 Tm 0 Tr (Pior caso= n elementos) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 184.42 Tm 0 Tr (12  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 52.35 184.42 Tm 0 Tr (        ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 100.35 184.42 Tm 0 Tr (BUSCA BINÁRIA) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 195.76 Tm 0 Tr (13  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 195.76 Tm 0 Tr (Melhor caso= 1 comparação , sendo o numero de intereções igual a N, com elemento no) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 207.09 Tm 0 Tr (centro da estrutura) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 218.43 Tm 0 Tr (14  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 218.43 Tm 0 Tr (Pior caso=  log de n na base 2, sendo n comparações. O elemento não está nem ao) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 229.77 Tm 0 Tr (centro e nem nas outras metades do vetor) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 241.11 Tm 0 Tr (15  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 252.45 Tm 0 Tr (16  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 263.79 Tm 0 Tr (17  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 275.13 Tm 0 Tr (18  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 275.13 Tm 0 Tr (Não.Pois, tudo dependerá do tamanho do vetor e da posição do elemento a ser) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 286.46 Tm 0 Tr (procurado.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 297.80 Tm 0 Tr (19  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 297.80 Tm 0 Tr (Para vetores maiores a busca binária tende a ser mais compensativa. Já para vetores) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 309.14 Tm 0 Tr (menores a busca sequencial é mais interressante.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 320.48 Tm 0 Tr (20  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 331.82 Tm 0 Tr (21  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 343.16 Tm 0 Tr (22  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 354.50 Tm 0 Tr (23  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 52.35 354.50 Tm 0 Tr (  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 64.35 354.50 Tm 0 Tr (EXEMPLO) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 365.83 Tm 0 Tr (24  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 365.83 Tm 0 Tr (VETOR = 0 1 2 3 4 5 6 7 8 9.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 377.17 Tm 0 Tr (25  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 377.17 Tm 0 Tr (Caso o elemento buscado fosse 0, a busca sequencial seria mais interessante, pois) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 388.51 Tm 0 Tr (seria realizado apenas 1 iteração. Já na busca binária seria realizada 2 iterações.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 399.85 Tm 0 Tr (26  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 399.85 Tm 0 Tr (Caso o elemento buscado fosse 5, a busca binária seria mais interessante, pois seria) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 411.19 Tm 0 Tr (realizado  1 iteração. Já na busca sequencial seria realizada 5 iterações.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 422.53 Tm 0 Tr (27  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 422.53 Tm 0 Tr (Caso o elemento buscado fosse 2, a busca binaria seria igual a busca sequencial seria) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 433.87 Tm 0 Tr (realizado 3 iterações em ambas.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 445.20 Tm 0 Tr (28  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 445.20 Tm 0 Tr (Sendo assim, o número de iterações será mais compensativo a partir do 5º elemento,) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 28.35 456.54 Tm 0 Tr (pois o número de iterações da busca binária será menor do que a busca sequencial.) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 467.88 Tm 0 Tr (29  ) Tj  ET Q
+q 0.596 0.596 0.851 rg BT 1 0 0 -1 52.35 467.88 Tm 0 Tr (*/) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 479.22 Tm 0 Tr (30  ) Tj  ET Q
+BT /F2 10.00 Tf ET
+q 0.000 0.000 0.627 rg BT 1 0 0 -1 52.35 479.22 Tm 0 Tr (int ) Tj  ET Q
+BT /F1 10.00 Tf ET
+1.000 1.000 1.000 rg
+76.35 470.55 24.00 11.34 re f q 0.000 0.000 0.000 rg BT 1 0 0 -1 76.35 479.22 Tm 0 Tr (main) Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 100.35 479.22 Tm 0 Tr (\() Tj  ET Q
+BT /F2 10.00 Tf ET
+q 0.000 0.000 0.627 rg BT 1 0 0 -1 106.35 479.22 Tm 0 Tr (void) Tj  ET Q
+BT /F1 10.00 Tf ET
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 130.35 479.22 Tm 0 Tr (\)) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 490.56 Tm 0 Tr (31  ) Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 52.35 490.56 Tm 0 Tr ({) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 501.90 Tm 0 Tr (32  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 52.35 501.90 Tm 0 Tr (    ) Tj  ET Q
+1.000 1.000 1.000 rg
+76.35 493.23 36.00 11.34 re f q 0.000 0.000 0.000 rg BT 1 0 0 -1 76.35 501.90 Tm 0 Tr (system) Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 112.35 501.90 Tm 0 Tr (\() Tj  ET Q
+q 0.000 0.000 1.000 rg BT 1 0 0 -1 118.35 501.90 Tm 0 Tr ("pause") Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 160.35 501.90 Tm 0 Tr (\);) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 513.24 Tm 0 Tr (33  ) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 52.35 513.24 Tm 0 Tr (    ) Tj  ET Q
+BT /F2 10.00 Tf ET
+q 0.000 0.000 0.627 rg BT 1 0 0 -1 76.35 513.24 Tm 0 Tr (return ) Tj  ET Q
+BT /F1 10.00 Tf ET
+q 0.941 0.000 0.941 rg BT 1 0 0 -1 118.35 513.24 Tm 0 Tr (0) Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 124.35 513.24 Tm 0 Tr (;) Tj  ET Q
+q 0.000 0.000 0.000 rg BT 1 0 0 -1 28.35 524.57 Tm 0 Tr (34  ) Tj  ET Q
+q 1.000 0.000 0.000 rg BT 1 0 0 -1 52.35 524.57 Tm 0 Tr (}) Tj  ET Q
+Q
+
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R ]
+/Count 1
+/MediaBox [0 0 595.276 841.890]
+>>
+endobj
+5 0 obj
+<</Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+>>
+endobj
+6 0 obj
+<</Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F2 5 0 R
+/F1 6 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+7 0 obj
+<<
+/Names []
+>>
+endobj
+8 0 obj
+<<
+/Producer (þÿ w x P d f D o c u m e n t   0 . 9 . 8)
+/CreationDate (D:20211019094552)
+>>
+endobj
+9 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000007927 00000 n 
+0000008209 00000 n 
+0000000009 00000 n 
+0000000098 00000 n 
+0000008016 00000 n 
+0000008115 00000 n 
+0000008323 00000 n 
+0000008354 00000 n 
+0000008461 00000 n 
+trailer
+<<
+/Size 10
+/Root 9 0 R
+/Info 8 0 R
+>>
+startxref
+8564
+%%EOF
