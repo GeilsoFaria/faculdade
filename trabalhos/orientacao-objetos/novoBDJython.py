@@ -232,7 +232,7 @@ def pesquisarVeiculo(placa):
             if len(veiculos) == 0:
                 print("Nenhum veículo encontrado.")
             else:
-                print("Veículo encontrados:")
+                print("Veículo encontrado:")
                 for veiculo in veiculos:
                     print("Placa:", veiculo[0])
                     print("Marca:", veiculo[1])
@@ -245,6 +245,57 @@ def pesquisarVeiculo(placa):
 
         except Error as erro:
             print("Erro ao pesquisar Veiculo:", erro)
+        finally:
+            conexao.close()
+
+
+def pesquisarPessoaFisica(cpfPessoaFisica):
+    conexao = criarConexao()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.execute("SELECT * FROM PessoaFisica WHERE cpfPessoaFisica=?", (cpfPessoaFisica,))
+            pessoas = cursor.fetchall()
+
+            if len(pessoas) == 0:
+                print("Nenhuma pessoa encontrada.")
+            else:
+                print("Pessoa encontrada:")
+                for pessoa in pessoas:
+                    print("Cpf:", pessoa[0])
+                    print("Rg:", pessoa[1])
+                    print("Nome:", pessoa[2])
+                    print("Endereco:", pessoa[3])
+                    print("Bairro:", pessoa[4])
+                    print("Numero:",pessoa[5])
+                    print("Cep:", pessoa[6])
+                    print("Email:",pessoa[7])
+                    print("Data de Nascimento:", pessoa[8])
+                    print("-----------------------")
+
+        except Error as erro:
+            print("Erro ao pesquisar pessoa:", erro)
+        finally:
+            conexao.close()
+
+def pesquisarCompra():
+    conexao = criarConexao()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.execute("SELECT * FROM Compra")
+            compras = cursor.fetchall()
+
+            if len(compras) == 0:
+                print("Nenhuma compra encontrada.")
+            else:
+                print("Compras encontrados:")
+                for compra in compras:
+                    print(compra)
+                    print("-----------------------")
+
+        except Error as erro:
+            print("Erro ao pesquisar compras:", erro)
         finally:
             conexao.close()
 
@@ -271,9 +322,11 @@ if __name__ == '__main__':
 
     # Exemplo de inserção na tabela Compra:
     inserirCompra(1, "33.310.386/0001-97", "111.222.333-44", "555.666.777-88", "22.444.666/0001-99", "ABC1234")
-    #---------------------------------------------------------------------------------------------------------
+    inserirCompra(2, "33.310.386/0001-97", "111.222.333-44", "555.666.777-88", "22.444.666/0001-99", "ABC1234")
+    #--------------------------PESQUISAS-------------------------------------------------------------------
     pesquisarFuncionario("111.222.333-44")
     pesquisarVeiculo("ABC1234")
-
+    pesquisarCompra()
+    pesquisarPessoaFisica("555.666.777-88")
 
 
