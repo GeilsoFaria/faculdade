@@ -43,6 +43,13 @@
 #define pernaInferiorY 15.0
 #define pernaInferiorZ 5.0
 
+float anguloCabeca = 0.0f;
+bool girarCabecaEsquerda = false;
+bool girarCabecaDireita = false;
+
+float anguloPescoco = 0.0f;
+bool girarPescocoEsquerda = false;
+bool girarPescocoDireita = false;
 
 void tronco()
 {
@@ -56,6 +63,7 @@ void pescoco()
 {
     glColor3f(1.0, 0.0, 0.0);
     glPushMatrix();
+        glRotatef(anguloPescoco,1.0,0.0,0.0);
         glScalef(pescocoX, pescocoY, pescocoZ);
         glutSolidCube(1.0);
     glPopMatrix();
@@ -127,22 +135,21 @@ void desenharPernaInferior()
     glPopMatrix();
 
 }
+
+
 void desenharCabeca()
 {
-
     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
+        glRotatef(anguloCabeca,0.0,1.0,0.0);
         glScalef(cabecaX,cabecaY, cabecaZ);
         glutSolidCube(1.0);
     glPopMatrix();
-
-
-
 }
-void desenharRobo()
+
+void desenharSuperiores()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //---TRONCO---
+        //---TRONCO---
     tronco();
     glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);
     desenharArticulacao();
@@ -181,7 +188,9 @@ void desenharRobo()
     glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
     desenharBracoInferior();
 
-
+}
+void desenharInferiores()
+{
     //----INFERIORES----
     //Perna Esquerda
     glTranslatef(0.0,(bracoInferiorY+raioEsfera*2+bracoSuperiorY+claviculaY),0.0);
@@ -211,8 +220,15 @@ void desenharRobo()
     desenharPernaInferior();
 
 
-
+}
+void desenharRobo()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();
+    desenharSuperiores();
+    desenharInferiores();
     glutSwapBuffers();
+    glPopMatrix();
 }
 
 void resize(int w, int h) {
@@ -226,7 +242,64 @@ void resize(int w, int h) {
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
 }
+void Timer(int value);
 
+void Teclado(unsigned char tecla, int x, int y) {
+    switch (tecla) {
+        case 27:
+        case 'q':
+            exit(0);
+            break;
+        case 'h'://Girar Head(Cabeca)
+            if (!girarCabecaEsquerda && !girarCabecaDireita) {
+                girarCabecaEsquerda = true;
+                glutTimerFunc(33, Timer, 0);
+            }
+            break;
+        case 'n'://Girar
+            if (!girarPescocoEsquerda && !girarPescocoDireita) {
+                girarPescocoEsquerda = true;
+                glutTimerFunc(33, Timer, 0);
+            }
+            break;
+    }
+}
+
+void Timer(int value) {
+    if (girarCabecaEsquerda)
+    {
+        anguloCabeca += 3.0;
+        if (anguloCabeca >= 50.0) {
+            anguloCabeca = 50.0;
+            girarCabecaEsquerda = false;
+            girarCabecaDireita = true;
+        }
+    } else if (girarCabecaDireita) {
+        anguloCabeca -= 3.0;
+        if (anguloCabeca <= -50.0) {
+            anguloCabeca = 0.0;
+            girarCabecaDireita = false;
+        }
+    }
+    if (girarPescocoEsquerda)
+    {
+        anguloPescoco += 3.0;
+        if (anguloPescoco >= 50.0) {
+            anguloPescoco = 50.0;
+            girarPescocoEsquerda = false;
+            girarPescocoDireita = true;
+        }
+    } else if (girarPescocoDireita) {
+        anguloPescoco -= 3.0;
+        if (anguloPescoco <= -50.0) {
+            anguloPescoco = 0.0;
+            girarPescocoDireita = false;
+        }
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(33, Timer, 0);
+}
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -236,6 +309,9 @@ int main(int argc, char** argv) {
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glEnable(GL_DEPTH_TEST);
     glutDisplayFunc(desenharRobo);
+    glutKeyboardFunc (Teclado);
+    //glutTimerFunc(33, Timer, 1);
+
     glutMainLoop();
     return 0;
 }
