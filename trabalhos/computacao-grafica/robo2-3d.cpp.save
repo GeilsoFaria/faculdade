@@ -4,6 +4,13 @@
 #include <GL/glut.h>
 #endif
 #include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+//#include <stdbool.h>
+
+//int passo = 0; // Contador de passos
+bool caminhando = false;
+//float posicaoRoboX = 0.0; // Posição do robô no eixo X
 
 #define troncoX 10.0
 #define troncoY 30.0
@@ -56,10 +63,61 @@ bool girarCabecaTras = false;
 bool varGirabraco=false;
 bool controleBraco=true;
 
+bool animacaoAtiva = true; // Inicialmente, a animação está ativa
+
+float anguloPernaEsquerda = 0.0f;
+float anguloPernaDireita = 0.0f;
+
 
 void GirarBraco(int value);
 
+void AtualizarAnimacao(int value) {
+    // Atualiza o ângulo das pernas de acordo com o passo atual
+    if (caminhando==true){
+            if (passo % 2 == 0) {
+            anguloPernaEsquerda = sin(value * 0.1) * 45.0;  // Simula o movimento da perna esquerda
+            anguloPernaDireita = sin(value * 0.1 + 3.14) * 45.0;  // Mantém a perna direita reta
+        } else {
+            anguloPernaEsquerda = sin(value * 0.1 + 3.14) * 45.0;  // Mantém a perna esquerda reta
+            anguloPernaDireita = sin(value * 0.1) * 45.0;  // Simula o movimento da perna direita
+        }
+        /*
+        // Move o robô para frente durante a caminhada
+        if (passo < 2) {
+            posicaoRoboX += 0.05; // Ajuste a velocidade de movimento conforme necessário
+        } else {
+            caminhando = false; // Termina a animação após dois passos
+        }*/
+    }
 
+
+    glutPostRedisplay();
+    glutTimerFunc(33, AtualizarAnimacao,0);
+}
+
+
+
+// Função para iniciar a animação de caminhada
+void IniciarCaminhada() {
+    caminhando = true;
+    passo = 0;
+}
+
+// Função para parar a animação de caminhada
+void PararCaminhada() {
+    caminhando = false;
+}
+/*
+void ConcluirPasso(int value) {
+    passo++;
+
+    if (passo < 2) {
+        glutTimerFunc(1000, ConcluirPasso, 0);  // Espera 1 segundo antes de dar o próximo passo
+    } else {
+        PararCaminhada(); // Para a animação após dois passos
+    }
+}
+*/
 void tronco()
 {
     glColor3f(1.0, 0.0, 0.0);
@@ -192,14 +250,78 @@ void desenharSuperiores()
     desenharBracoInferior();
     glPopMatrix();
 
+
+}
+void desenharCintura()
+{
+    glColor3f(1.0, 0.0, 0.0);
+    glPushMatrix();
+        glScalef(cinturaX,cinturaY,cinturaZ);
+        glutSolidCube(1.0);
+    glPopMatrix();
+}
+void desenharPernaSuperior()
+{
+    glColor3f(1.0, 0.0, 1.0);
+    glPushMatrix();
+        glScalef(pernaSuperiorX,pernaSuperiorY,pernaSuperiorZ);
+         glRotatef(anguloPernaEsquerda, 1.0, 0.0, 0.0);
+        glutSolidCube(1.0);
+    glPopMatrix();
+
+}
+
+void desenharPernaInferior()
+{
+    glColor3f(1.0, 0.0, 1.0);
+    glPushMatrix();
+        glScalef(pernaInferiorX,pernaInferiorY, pernaInferiorZ);
+        glRotatef(anguloPernaDireita, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
+        glutSolidCube(1.0);
+    glPopMatrix();
+
+}
+void desenharInferiores()
+{
+    //----INFERIORES----
+    //Perna Esquerda
+    glTranslatef(0.0,-troncoY,0.0);
+    glTranslatef(0.0,(bracoInferiorY+raioEsfera*2+bracoSuperiorY+claviculaY),0.0);
+    glTranslatef(-(bracoInferiorX+claviculaX+troncoX/2),-(troncoY+cinturaY),0.0);
+    glTranslatef(-cinturaX/2,0.0,0.0);
+
+    desenharCintura();
+    glTranslatef(-(cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);
+    desenharArticulacao();
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    desenharPernaSuperior();
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    desenharArticulacao();
+    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);
+    desenharPernaInferior();
+    //Perna Direita
+    glTranslatef(raioEsfera,(pernaInferiorY+raioEsfera*2+pernaSuperiorY+cinturaY),0.0);
+    glTranslatef(cinturaX,0.0,0.0);
+    desenharCintura();
+    glTranslatef((cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);
+    desenharArticulacao();
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    desenharPernaSuperior();
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    desenharArticulacao();
+    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);
+    desenharPernaInferior();
+
+
 }
 
 void desenharRobo()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPushMatrix();
-    desenharSuperiores();
-    //desenharInferiores();
+     //glTranslatef(0.0, 0.0, posicaoRoboX);
+   desenharSuperiores();
+    desenharInferiores();
     glutSwapBuffers();
     glPopMatrix();
 }
@@ -217,6 +339,9 @@ void resize(int w, int h) {
 }
 void GirarPescoco(int value);
 void GirarPescocoFrenteTras(int value);
+void IniciarPararCaminhada() {
+    caminhando = !caminhando;
+}
 
 void Teclado(unsigned char tecla, int x, int y) {
     switch (tecla) {
@@ -228,6 +353,7 @@ void Teclado(unsigned char tecla, int x, int y) {
             if (!girarCabecaEsquerda && !girarCabecaDireita) {
                 girarCabecaEsquerda = true;
                 glutTimerFunc(33, GirarPescoco, 0);
+
             }
             break;
         case 'n':
@@ -244,6 +370,25 @@ void Teclado(unsigned char tecla, int x, int y) {
             //}
 
             break;
+        case 'w': // Inicia/Para a caminhada
+            //IniciarPararCaminhada();
+            //caminhando = true;
+            //passo = 0;
+             IniciarCaminhada();
+            AtualizarAnimacao();
+            
+
+            //posicaoRoboX = 0.0;
+            break;
+        case 'p':
+           // animacaoAtiva = !animacaoAtiva;
+           //PararCaminhada();
+           exit(0);
+    //        caminhando=0;
+
+
+            break;
+
 
 
 
@@ -288,7 +433,7 @@ void GirarBraco(int value) {
         }
         }
     glutPostRedisplay();
-    glutTimerFunc(200, GirarBraco, 0);
+    glutTimerFunc(33, GirarBraco, 0);
 
 }
 
@@ -332,6 +477,7 @@ void GirarPescocoFrenteTras(int value) {
     glutPostRedisplay();
     glutTimerFunc(33, GirarPescocoFrenteTras, 0);
 }
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -343,6 +489,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(desenharRobo);
     glutKeyboardFunc (Teclado);
     //glutTimerFunc(33, Timer, 1);
+    // glutTimerFunc(33, AtualizarAnimacao, 0);
 
     glutMainLoop();
     return 0;
