@@ -55,7 +55,9 @@ float anguloBracoX =0.0f;
 float anguloBracoY=0.0f;
 float anguloBracoZ=0.0f;
 float posicaoAnimacaoZ = 0.0; // Posição do robô no eixo X
-int passo = 0; // Contador de passos
+float anguloAgachar=0.0f;
+float anguloPular=0.0f;
+//int passo = 0; // Contador de passos
 float MovimentoPeZ=0.0;
 float MovimentoPeDireitaZ=0.0;
 //--------Declaração de Funções--------
@@ -63,12 +65,57 @@ void GirarBraco(int value);
 void GirarCabeca(int value);
 void GirarPescoco(int value);
 void desenharArticulacao();
-
-
+void agachar();
+bool desceu=false;
 int valor=30;
+int cont=0;
+bool agachou= false;
+bool pulou=false;
 
 //-------------MOVIMENTACAO--------------
+void pular(int value)
+{
+    if(pulou == true)
+    {
+        anguloPular -= 0.5;
+        if (anguloPular <= -2.0)
+        {
+            anguloPular = 0.0;
+            pulou=false;
+            //desceu=true;
+        }
+    }
+     glutPostRedisplay();
+    glutTimerFunc(15, pular, 0);
+}
+void agachar(int value)
+{
 
+    if(agachou == true)
+    {
+        anguloAgachar += 0.5;
+        if (anguloAgachar >= 2.0)
+        {
+            anguloAgachar = 0.0;
+            agachou=false;
+            desceu=true;
+        }
+    }
+    /*if (desceu==true && anguloAgachar <=1.0)
+    {
+        anguloAgachar += 0.1;
+        if (anguloAgachar == 1.0)
+        {
+            anguloAgachar = 1.0;
+            //return true;
+            agachou= false;
+            cont=1;
+        }
+    }*/
+    glutPostRedisplay();
+    glutTimerFunc(15, agachar, 0);
+
+}
 void GirarBraco(int value)
 {
     if(controleBraco==true)
@@ -200,6 +247,8 @@ void desenharCintura()
     glColor3f(1.0, 1.0, 0.0);
     glPushMatrix();
         glScalef(cinturaX,cinturaY,tamanhoZ);
+         //glTranslatef(0.0,anguloAgachar,0.0);
+       // glRotatef(anguloAgachar,1.0,0.0,0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -210,6 +259,9 @@ void desenharPernaSuperior()
         glScalef(pernaSuperiorX,pernaSuperiorY,tamanhoZ);
         glTranslatef(0.0,0.0,MovimentoPeZ);
          glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
+        // glRotatef(-anguloAgachar,0.0,1.0,0.0);
+         //glTranslatef(0.0,anguloAgachar,0.0);
+          // glRotatef(anguloAgachar, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 
@@ -222,6 +274,7 @@ void desenharPernaInferior()
         //glTranslatef(0.0, 0.0, posicaoRoboZ);
         glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
         glTranslatef(0.0,0.0,MovimentoPeZ);
+         // glRotatef(anguloAgachar, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -232,6 +285,10 @@ void desenharPernaSuperiorDireita()
         glScalef(pernaSuperiorX,pernaSuperiorY,tamanhoZ);
          glRotatef( anguloPernaSuperiorDireita , 1.0, 0.0, 0.0);
          glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+          //glTranslatef(0.0,anguloAgachar,0.0);
+       // glRotatef(anguloAgachar,1.0,0.0,0.0);
+        // glRotatef(anguloAgachar, 1.0, 0.0, 0.0);
+
         glutSolidCube(1.0);
     glPopMatrix();
 
@@ -244,6 +301,7 @@ void desenharPernaInferiorDireita()
         //glTranslatef(0.0, 0.0, posicaoRoboZ);
         glRotatef(anguloPernaInferiorDireita, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
         glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+         // glRotatef(anguloAgachar, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -251,6 +309,7 @@ void desenharInferiores()
 {
     //----INFERIORES----
     //Perna Esquerda
+
     glTranslatef(0.0,(bracoInferiorY/2+raioEsfera*2+bracoSuperiorY+raioEsfera),0.0);//Volta o eixo para o centro de massa da esfera ao lado da clavívula
     glTranslatef(-(bracoInferiorX+claviculaX+troncoX/2),-(troncoY+cinturaY),0.0);//Posiciona para desenhar a cintura
     glTranslatef(-cinturaX/2,0.0,0.0);//Aqui arrasta o eixo do meio exato da cintura para a metade esquerda
@@ -281,6 +340,7 @@ void desenharTronco()
     glColor3f(1.0, 0.0, 0.0);
     glPushMatrix();
             glScalef(troncoX, troncoY, tamanhoZ);
+           // glTranslatef(0.0,anguloAgachar,0.0);
             glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -291,6 +351,7 @@ void desenharPescoco()
         glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);
         glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);
         glScalef(pescocoX, pescocoY, tamanhoZ);
+        //glTranslatef(0.0,anguloAgachar,0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -300,6 +361,7 @@ void desenharArticulacaoSuperiores()
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
         glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+        //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
 }
@@ -308,6 +370,7 @@ void desenharArticulacao()
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
         glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
 }
@@ -316,6 +379,7 @@ void desenharClavicula()
     glColor3f(0.0, 0.0, 1.0);
     glPushMatrix();
         glScalef(claviculaX, claviculaY, tamanhoZ);
+        //glTranslatef(0.0,anguloAgachar,0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -327,6 +391,7 @@ void desenharBracoSuperior()
         glScalef(bracoSuperiorX, bracoSuperiorY, tamanhoZ);
         glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
         //glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        //glTranslatef(0.0,anguloAgachar,0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -338,6 +403,9 @@ void desenharBracoInferior()
         glScalef(bracoInferiorX, bracoInferiorY, tamanhoZ);
          glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
          //glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+         //glTranslatef(0.0,anguloAgachar,0.0);
+        //printf("%f\n", anguloAgachar);
+
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -349,17 +417,24 @@ void desenharCabeca()
         glScalef(cabecaX,cabecaY, cabecaZ);
         glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);
         glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);
+        //glTranslatef(0.0,anguloAgachar,0.0);
+        //glTranslatef(0,anguloAgachar,0);
+        //printf("%f\n", anguloAgachar);
         glutSolidCube(1.0);
     glPopMatrix();
 }
 
 void desenharSuperiores()
 {
+    glTranslatef(0,anguloPular,0);
     //---TRONCO---
     desenharTronco();
     glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);
     //---ARTICULAÇÃO PESCOCO---
+   // glPushMatrix();
+    //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
     desenharArticulacao();
+    //glPopMatrix();
     //---PESCOCO---
     glTranslatef(0.0, (raioEsfera+pescocoY/2), 0.0);
     desenharPescoco();
@@ -372,7 +447,10 @@ void desenharSuperiores()
     desenharClavicula();
     //---OMBRO ESQUERDO---
     glTranslatef(-(claviculaX/2+raioEsfera),0.0,0.0);
+    //glPushMatrix();
+    //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
     desenharArticulacao();
+    //glPopMatrix();
     //Braco Superior Esquerdo
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
     desenharBracoSuperior();
@@ -386,13 +464,18 @@ void desenharSuperiores()
     //Clavicula Direita
     desenharClavicula();
     glTranslatef((claviculaX/2+raioEsfera),0.0,0.0);
+    //glPushMatrix();
+    //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
     desenharArticulacao();
+    //glPopMatrix();
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
     desenharBracoSuperior();
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
     desenharArticulacaoSuperiores();
     glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
     desenharBracoInferior();
+
+
 }
 void desenharRobo()
 {
@@ -434,6 +517,9 @@ void MenuGestos(int op)
                 glutTimerFunc(33, GirarPescoco, 0);
             }
             break;
+        case 3:
+           pulou=true;
+            anguloPular=40;
     }
 
     glutPostRedisplay();
@@ -446,14 +532,14 @@ void MenuCaminhada(int op)
    {
         case 0:
             caminhando=false;
-            passo = 0;
+//            passo = 0;
             //posicaoAnimacaoZ = 0.0;
             caminhadaManual(valor);
             valor+=10;
             break;
         case 1:
             caminhando = true;
-            passo = 0;
+//            passo = 0;
             posicaoAnimacaoZ = 0.0;
             break;
 
@@ -479,7 +565,8 @@ void CriaMenu()
     submenu2 = glutCreateMenu(MenuGestos);
 	glutAddMenuEntry("Acenar",0);
 	glutAddMenuEntry("Mover Cabeca",1);
-	glutAddMenuEntry("Move Pescoco",2);
+	glutAddMenuEntry("Mover Pescoco",2);
+	glutAddMenuEntry("Pular",3);
 
     menu = glutCreateMenu(MenuPrincipal);
 	glutAddSubMenu("Gestos",submenu2);
@@ -528,7 +615,7 @@ void Teclado(unsigned char tecla, int x, int y)
             break;
         case 'w': // Inicia Para a caminhada
             caminhando = true;
-            passo = 0;
+//            passo = 0;
             posicaoAnimacaoZ = 0.0;
             break;
         case 'p':
@@ -542,6 +629,19 @@ void Teclado(unsigned char tecla, int x, int y)
          case 'm':
             caminhadaManual(valor);
             valor+=10;
+         case 's':
+             agachou=true;
+            // glutTimerFunc(33, agachar, 0);
+            //agachar();
+//            pular();
+            break;
+        case 'i':
+            //agachou=false;
+            pulou=true;
+            anguloPular=40;
+            //glutTimerFunc(33, pular, 0);
+            //agachar();
+
     }
 }
 void resize(int w, int h)
@@ -569,6 +669,9 @@ int main(int argc, char** argv)
     glutKeyboardFunc (Teclado);
     glutTimerFunc(33, AtualizarAnimacao, 0);
     glutTimerFunc(33, AtualizarAnimacaoDireita, 0);
+    glutTimerFunc(15, agachar, 0);
+    glutTimerFunc(15, pular, 0);
+
     glutMouseFunc(GerenciaMouse);
 
     glutMainLoop();
