@@ -44,6 +44,7 @@ bool girandoPescocoFrente = false;
 bool girandoPescocoTras = false;
 bool verificaLateralBraco=false;
 bool controleBraco=true;
+bool controleBracoTchau=true;
 bool caminhando = false;
 float anguloMovCabecaPescocoY = 0.0f;
 float anguloMovCabecaPescocoX = 0.0f;
@@ -54,6 +55,9 @@ float anguloPernaInferiorDireita = 0.0f;
 float anguloBracoX =0.0f;
 float anguloBracoY=0.0f;
 float anguloBracoZ=0.0f;
+float anguloBracoXTchau =0.0f;
+float anguloBracoYTchau=0.0f;
+float anguloBracoZTchau=0.0f;
 float posicaoAnimacaoZ = 0.0; // Posição do robô no eixo X
 float anguloAgachar=0.0f;
 float anguloPular=0.0f;
@@ -149,6 +153,41 @@ void GirarBraco(int value)
     }
     glutPostRedisplay();
     glutTimerFunc(100, GirarBraco, 0);
+
+}
+void darTchau(int value)
+{
+    if(controleBracoTchau==true)
+    {
+        anguloBracoYTchau +=10.0;
+        anguloBracoZTchau= 5.0;
+        if(anguloBracoYTchau >= bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2)
+        {
+            anguloBracoYTchau=bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2;
+            anguloBracoZTchau=0;
+            if(verificaLateralBraco== false)
+            {
+                anguloBracoXTchau+=0.5;
+                if (anguloBracoXTchau >= 4.0)
+                {
+                    anguloBracoXTchau=4.0;
+                    verificaLateralBraco=true;;
+                }
+            }
+            else if(verificaLateralBraco ==true)
+            {
+                anguloBracoXTchau-=0.5;
+                if (anguloBracoXTchau == -4.0)
+                {
+                    anguloBracoXTchau=0.0;
+                    verificaLateralBraco=false;
+                    controleBracoTchau=false;
+                }
+            }
+        }
+    }
+    glutPostRedisplay();
+    glutTimerFunc(100, darTchau, 0);
 
 }
 
@@ -361,6 +400,17 @@ void desenharArticulacaoSuperiores()
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
         glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+         glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
+        //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
+        glutSolidSphere(raioEsfera, 20, 20);
+    glPopMatrix();
+}
+void desenharArticulacaoSuperioresDireito()
+{
+    glPushMatrix();
+        glColor3f(0.0,1.0,0.0);
+        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+         //glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
         //glTranslatef(0.0,anguloAgachar*raioEsfera*2,0.0);
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
@@ -395,11 +445,40 @@ void desenharBracoSuperior()
         glutSolidCube(1.0);
     glPopMatrix();
 }
+void desenharBracoSuperiorEsquerdo()
+{
+    glColor3f(0.0, 1.0, 1.0);
+    glPushMatrix();
+       glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+       glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
+        glScalef(bracoSuperiorX, bracoSuperiorY, tamanhoZ);
+        glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
+        //glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        //glTranslatef(0.0,anguloAgachar,0.0);
+        glutSolidCube(1.0);
+    glPopMatrix();
+}
 void desenharBracoInferior()
 {
     glColor3f(0.0, 1.0, 1.0);
     glPushMatrix();
         glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+        glScalef(bracoInferiorX, bracoInferiorY, tamanhoZ);
+         glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
+         //glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+         //glTranslatef(0.0,anguloAgachar,0.0);
+        //printf("%f\n", anguloAgachar);
+
+        glutSolidCube(1.0);
+    glPopMatrix();
+}
+
+void desenharBracoInferiorEsquerdo()
+{
+    glColor3f(0.0, 1.0, 1.0);
+    glPushMatrix();
+        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+        glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
         glScalef(bracoInferiorX, bracoInferiorY, tamanhoZ);
          glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
          //glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
@@ -453,12 +532,12 @@ void desenharSuperiores()
     //glPopMatrix();
     //Braco Superior Esquerdo
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
-    desenharBracoSuperior();
+    desenharBracoSuperiorEsquerdo();
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
     desenharArticulacaoSuperiores();
     //Braco Inferior Esquerdo
     glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
-    desenharBracoInferior();
+    desenharBracoInferiorEsquerdo();
     //---BRACO DIREITO ---
     glTranslatef((bracoInferiorX+claviculaX+troncoX+claviculaX/2),(bracoInferiorY+raioEsfera*2+bracoSuperiorX+claviculaY),0.0);
     //Clavicula Direita
@@ -471,7 +550,9 @@ void desenharSuperiores()
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
     desenharBracoSuperior();
     glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
-    desenharArticulacaoSuperiores();
+
+    desenharArticulacaoSuperioresDireito();
+
     glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
     desenharBracoInferior();
 
@@ -520,6 +601,19 @@ void MenuGestos(int op)
         case 3:
            pulou=true;
             anguloPular=40;
+            break;
+        case 4:
+            anguloBracoXTchau=0;
+            anguloBracoYTchau=0;
+            anguloBracoZTchau=0;
+            anguloBracoX=0;
+            anguloBracoY=0;
+            anguloBracoZ=0;
+            controleBracoTchau=true;
+            glutTimerFunc(33, darTchau, 0);
+            break;
+
+
     }
 
     glutPostRedisplay();
@@ -561,12 +655,12 @@ void CriaMenu()
 	glutAddMenuEntry("Manualmente",0);
 	glutAddMenuEntry("Automatico",1);
 
-
     submenu2 = glutCreateMenu(MenuGestos);
-	glutAddMenuEntry("Acenar",0);
+	glutAddMenuEntry("Festejar (Maos)",0);
 	glutAddMenuEntry("Mover Cabeca",1);
 	glutAddMenuEntry("Mover Pescoco",2);
 	glutAddMenuEntry("Pular",3);
+	glutAddMenuEntry("Dar Tchau",4);
 
     menu = glutCreateMenu(MenuPrincipal);
 	glutAddSubMenu("Gestos",submenu2);
@@ -579,7 +673,12 @@ void GerenciaMouse(int button, int state, int x, int y)
     if (button == GLUT_RIGHT_BUTTON)
          if (state == GLUT_DOWN)
             CriaMenu();
-
+    if(button ==GLUT_LEFT_BUTTON)
+    {
+        anguloBracoX=0;
+        anguloBracoY=0;
+        anguloBracoZ=0;
+    }
     glutPostRedisplay();
 }
 void Teclado(unsigned char tecla, int x, int y)
@@ -606,8 +705,21 @@ void Teclado(unsigned char tecla, int x, int y)
                 glutTimerFunc(33, GirarPescoco, 0);
             }
             break;
-        case 'a'://Acenar - a
+        case 'o':
+            anguloBracoXTchau=0;
+            anguloBracoYTchau=0;
+            anguloBracoZTchau=0;
+            anguloBracoX=0;
+            anguloBracoY=0;
+            anguloBracoZ=0;
+            controleBracoTchau=true;
+            glutTimerFunc(33, darTchau, 0);
+            break;
 
+        case 'a'://Acenar - a
+            anguloBracoXTchau=0;
+            anguloBracoYTchau=0;
+            anguloBracoZTchau=0;
             //desenharBracoInferior();
             //desenharBracoSuperior();
             controleBraco=true;
@@ -641,7 +753,6 @@ void Teclado(unsigned char tecla, int x, int y)
             anguloPular=40;
             //glutTimerFunc(33, pular, 0);
             //agachar();
-
     }
 }
 void resize(int w, int h)
@@ -669,11 +780,9 @@ int main(int argc, char** argv)
     glutKeyboardFunc (Teclado);
     glutTimerFunc(33, AtualizarAnimacao, 0);
     glutTimerFunc(33, AtualizarAnimacaoDireita, 0);
-    glutTimerFunc(15, agachar, 0);
+   //glutTimerFunc(15, agachar, 0);
     glutTimerFunc(15, pular, 0);
-
     glutMouseFunc(GerenciaMouse);
-
     glutMainLoop();
     return 0;
 }
