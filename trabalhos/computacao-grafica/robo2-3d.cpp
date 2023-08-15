@@ -730,6 +730,7 @@ void resize(int w, int h)
     glLoadIdentity();
     //Camera em X=-40, Y=0, Z=60
     //Olhando para X=0,Y=0,Z=0
+    //Direita vertical da camera em Y
     gluLookAt(-40.0, 0.0, 60.0,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
