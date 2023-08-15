@@ -345,9 +345,8 @@ void desenharPernaInferiorDireita()
 void desenharInferiores()
 {
     //Perna Esquerda
-    glTranslatef(0.0,(bracoInferiorY/2+raioEsfera*2+bracoSuperiorY+raioEsfera),0.0);//Volta o eixo para o centro de massa da esfera ao lado
-                                                                                    // da clavívula
-    glTranslatef(-(bracoInferiorX+claviculaX+troncoX/2),-(troncoY+cinturaY),0.0);//Posiciona para desenhar a cintura
+    glTranslatef(0.0,(bracoInferiorY/2+raioEsfera*2+bracoSuperiorY+raioEsfera),0.0);//Volta o eixo y (antigamente no braco inferior direita para o centro da clavicula
+    glTranslatef(-(bracoInferiorX+claviculaX+troncoX/2),-(troncoY+cinturaY),0.0);//Posiciona a partir da clavicula em X para desenhar a cintura
     glTranslatef(-cinturaX/2,0.0,0.0);//Aqui arrasta o eixo do meio exato da cintura para a metade esquerda
     desenharCintura();
     glTranslatef(-(cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);//Translada para o centro da articulacao da perna esquerda
@@ -487,56 +486,50 @@ void desenharCabeca()
 void desenharSuperiores()
 {
     glTranslatef(0,anguloPular,0);//Caso ocorra o gesto de pular altera toda a posicao do boneco em Y
-    
+
     desenharTronco();
-    glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);//Tranlacao para o centro da esfera do pe
-    //---ARTICULAÇÃO PESCOCO---
+    glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);//Tranlacao para o centro da esfera do pesco
     desenharArticulacao();
-    //---PESCOCO---
-    glTranslatef(0.0, (raioEsfera+pescocoY/2), 0.0);
+    glTranslatef(0.0, (raioEsfera+pescocoY/2), 0.0);//Translacao para a metade do pescoco
     desenharPescoco();
-    //---CABECA---
-    glTranslatef(0.0,(pescocoY/2+cabecaY/2),0.0);
+    glTranslatef(0.0,(pescocoY/2+cabecaY/2),0.0);//Translacao para a metade da cabeca
     desenharCabeca();
     //---------BRACO ESQUERDO---------
-    //---Clavícula Esquerda---
-    glTranslatef( -(claviculaX/2+troncoX/2),-((raioEsfera*2+pescocoY+raioEsfera)+claviculaY/2) ,0.0);
+    glTranslatef( -(claviculaX/2+troncoX/2),-((raioEsfera*2+pescocoY+raioEsfera)+claviculaY/2) ,0.0);//Translacao que move da cabeca para a clavicula em y
+                                                                                                    // e depois para o centro da clavicula em X
     desenharClavicula();
-    //---OMBRO ESQUERDO---
-    glTranslatef(-(claviculaX/2+raioEsfera),0.0,0.0);
+    glTranslatef(-(claviculaX/2+raioEsfera),0.0,0.0);//Translacao para o centro do ombro esquerdo
     desenharArticulacao();
-    //Braco Superior Esquerdo
-    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);//Tranlacao para a metade do braco superior esquerdo
     desenharBracoSuperiorEsquerdo();
-    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);//Translacao para o centro da articulacao inferior do braco esquerdo
     desenharArticulacaoSuperiores();
-    //Braco Inferior Esquerdo
-    glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);//Translacao para o centro do braco inferior esquerdo
     desenharBracoInferiorEsquerdo();
     //---BRACO DIREITO ---
     glTranslatef((bracoInferiorX+claviculaX+troncoX+claviculaX/2),(bracoInferiorY+raioEsfera*2+bracoSuperiorX+claviculaY),0.0);
-    //Clavicula Direita
+    //Translacao do centro do braco inferior esquerdo para o centro da clavicula em X e Y
     desenharClavicula();
-    glTranslatef((claviculaX/2+raioEsfera),0.0,0.0);
+    glTranslatef((claviculaX/2+raioEsfera),0.0,0.0);//Translacao para o centro do ombro direito
     desenharArticulacao();
-    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);//Tranlacao para a metade do braco superior direito
     desenharBracoSuperior();
-    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoSuperiorY/2),0.0);//Translacao para o centro da articulacao inferior do braco direito
     desenharArticulacaoSuperioresDireito();
-    glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+bracoInferiorY/2),0.0);//Translacao para o centro do braco inferior direito
     desenharBracoInferior();
 }
 void desenharRobo()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPushMatrix(); //Usar PushMatriz() e PopMatriz() para que conforme ele seja redesenhado, ele ser redesenhado conforme a posição original
-        glTranslatef(0.0, 0.0, posicaoAnimacaoZ);
+    glPushMatrix(); //PushMatriz() e PopMatriz() para que conforme ele seja redesenhado, ser redesenhado conforme a posição original
+        glTranslatef(0.0, 0.0, posicaoAnimacaoZ);//Atualizacao do caminhar do boneco
         desenharSuperiores();
         desenharInferiores();
     glPopMatrix();
 
     glColor3f(0.0,0.0,0.0);
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_LINE_LOOP);//Definacao de um plano para simular um chao
         glVertex3f(40.0,-66.5,50.0);
         glVertex3f(40.0,-66.5,-50.0);
         glVertex3f(-40.0,-66.5,-50.0);
@@ -544,6 +537,7 @@ void desenharRobo()
     glEnd();
     glutSwapBuffers();
 }
+//Funcao para resetar todos os valores de variaveis globais
 void Resetar()
 {
     anguloBracoXTchau=0;
@@ -571,39 +565,33 @@ void MenuGestos(int op)
     {
         case 0:
             Resetar();
-            controleBraco=true;
-            glutTimerFunc(33, GirarBraco, 0);
+            controleBraco=true;//Ativa o controle do braco
+            glutTimerFunc(33, GirarBraco, 0);//Chama funcao de animacao para Girar o braco
             break;
         case 1:
             Resetar();
-            if (!girandoCabecaEsquerda && !girandoCabecaDireita)
+            if (!girandoCabecaEsquerda && !girandoCabecaDireita)//Verifica se a cabeca esta girando
             {
                 girandoCabecaEsquerda = true;
-                glutTimerFunc(33, GirarCabeca, 0);
+                glutTimerFunc(33, GirarCabeca, 0);//Chama funcao de girar cabeca
             }
             break;
         case 2:
             Resetar();
-            if (!girandoPescocoTras && !girandoPescocoFrente)
+            if (!girandoPescocoTras && !girandoPescocoFrente)//Verifica se o pescoco esta girando
             {
                 girandoPescocoTras = true;
-                glutTimerFunc(33, GirarPescoco, 0);
+                glutTimerFunc(33, GirarPescoco, 0);//Chama funcao de girar pescoco
             }
             break;
         case 3:
             Resetar();
-           pulou=true;
-            anguloPular=40;
+            pulou=true;//Ativa o pulo
+            anguloPular=40;//Da um pulo de 40 em Y
             break;
         case 4:
-            //anguloBracoXTchau=0;
-            //anguloBracoYTchau=0;
-            //anguloBracoZTchau=0;
-           // anguloBracoX=0;
-            //anguloBracoY=0;
-            //anguloBracoZ=0;
             Resetar();
-            controleBracoTchau=true;
+            controleBracoTchau=true;//Ativa o braco para 'dar tchau'
             glutTimerFunc(33, darTchau, 0);
             break;
     }
@@ -618,22 +606,20 @@ void MenuCaminhada(int op)
    {
         case 0:
             caminhando=false;
-            caminhadaManual(valor);
-            valor+=10;
+            caminhadaManual(valor);//Repassa o valor para caminhada manual
+            valor+=10;//Incrementa de 10 em 10 a caminhada em Z somados com os 30 iniciais
             break;
         case 1:
-            caminhando = true;
-            posicaoAnimacaoZ = 0.0;
+            caminhando = true;//Ativa caminhada automatica e como a funcao de caminhada e chamada na funcao main ela eh executada
+            posicaoAnimacaoZ = 0.0;//Define a posicao inicial da animacao
             break;
     }
     glutPostRedisplay();
 }
-
 // Gerenciamento do menu principal
 void MenuPrincipal(int op)
 {
 }
-
 // Criacao do Menu
 void CriaMenu()
 {
@@ -650,12 +636,9 @@ void CriaMenu()
 	glutAddMenuEntry("Pular",3);
 	glutAddMenuEntry("Dar Tchau",4);
 
-
-
     menu = glutCreateMenu(MenuPrincipal);
 	glutAddSubMenu("Caminhar",submenu1);
 	glutAddSubMenu("Gestos",submenu2);
-
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
@@ -665,12 +648,6 @@ void GerenciaMouse(int button, int state, int x, int y)
     if (button == GLUT_RIGHT_BUTTON)
          if (state == GLUT_DOWN)
             CriaMenu();
-    if(button ==GLUT_LEFT_BUTTON)
-    {
-        anguloBracoX=0;
-        anguloBracoY=0;
-        anguloBracoZ=0;
-    }
     glutPostRedisplay();
 }
 //Gerenciamento do Teclado
@@ -748,9 +725,11 @@ void resize(int w, int h)
     glViewport(0, 0, (GLsizei)w, (GLsizei)h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(120.0, (GLdouble)w / h, 1.0, 100.0);
+    gluPerspective(120.0, (GLdouble)w / h, 1.0, 100.0);//Fovy=120, Aspecto=1, Znear=1, ZFar=100
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    //Camera em X=-40, Y=0, Z=60
+    //Olhando para X=0,Y=0,Z=0
     gluLookAt(-40.0, 0.0, 60.0,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
@@ -760,14 +739,14 @@ int main(int argc, char** argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(600, 600);
-    glutCreateWindow("Robô 3D com 9 articulações");
+    glutCreateWindow("Robô 3D - Geilso Faria R.S.");
     glutReshapeFunc(resize);
     glClearColor(1.0, 1.0, 1.0, 1.0);
-    glEnable(GL_DEPTH_TEST);
-    glutDisplayFunc(desenharRobo);
-    glutKeyboardFunc (Teclado);
-    glutTimerFunc(33, AtualizarAnimacao, 0);
-    glutTimerFunc(33, AtualizarAnimacaoDireita, 0);
+    glEnable(GL_DEPTH_TEST);//Define a profundidade da animacao como ativa
+    glutDisplayFunc(desenharRobo);//Desenha o boneco
+    glutKeyboardFunc(Teclado);//Verifica o teclado
+    glutTimerFunc(33, AtualizarAnimacao, 0);//Caminhada automatica perna esquerda
+    glutTimerFunc(33, AtualizarAnimacaoDireita, 0);//Caminhada automatica pe
     glutTimerFunc(15, pular, 0);
     glutMouseFunc(GerenciaMouse);
     glutMainLoop();
