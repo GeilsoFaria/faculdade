@@ -33,11 +33,11 @@ botão direito do mouse duas vezes sobre a animacao:
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
+#include <GL/glut.h>//Biblioteca Grafica
 #endif
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include <math.h>//Usado para o calculo de seno e cosseno
 
 //Definição de constantes para escalas no eixo (X,Y,Z) dos cubos e para o valor das articulações
 #define raioEsfera 5.0
@@ -118,95 +118,95 @@ void desenharArticulacao();
 void Resetar();
 
 
-//-------------MOVIMENTACAO--------------
 void pular(int value)
 {
-    if(pulou == true)
+    if(pulou == true)//Se a variavel pulou eh setada como true comeca a animacao
     {
-        anguloPular -= 0.5;
+        anguloPular -= 0.5;//Decrementa pois para o pulo o eixo Y ja sofre uma translacao positiva
         if (anguloPular <= -2.0)
         {
             anguloPular = 0.0;
-            pulou=false;
+            pulou=false;//Verifica se ja atingiu o valor -2.0 e seta a variavel pulou como falsa
         }
     }
      glutPostRedisplay();
-    glutTimerFunc(15, pular, 0);
+    glutTimerFunc(15, pular, 0);//Funcao espera 15 milissegundos antes de usar uma recursao com ela mesmo
 }
 void GirarBraco(int value)
 {
-    if(controleBraco==true)
+    if(controleBraco==true)//Se a variavel controleBraco eh setada como true comeca a animacao
     {
-        anguloBracoY +=10.0;
-        anguloBracoZ = 5.0;
-        if(anguloBracoY >= bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2)
+        anguloBracoY +=10.0;//Atualiza a movimentacao em no eixo Y de 10 em 10
+        anguloBracoZ = raioEsfera;//Mantem o valor padrao em Z, para simular o movimento em torno da esfera
+        if(anguloBracoY >= bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2)//Verifica se o braco em Y ja nao atingiu a posicao deseja com a movimentacao
         {
-            anguloBracoY=bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2;
-            anguloBracoZ=0;
-            if(verificaLateralBraco== false)
+            anguloBracoY=bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2;//Se atingiu seta essa posicao desejada
+            anguloBracoZ=0;//Seta o movimento em Z=0, pois nao tem mais movimento em torna da esfera
+            if(verificaLateralBraco== false)//Se a lateral do braco eh false comeca a animacao de mover para os lados
             {
                 anguloBracoX+=0.5;
-                if (anguloBracoX >= 4.0)
+                if (anguloBracoX >= 4.0)//Se atingiu o movimento em um lado muda a variavel verificaLateralBraco
                 {
                     anguloBracoX=4.0;
                     verificaLateralBraco=true;;
                 }
             }
-            else if(verificaLateralBraco ==true)
+            else if(verificaLateralBraco ==true)//Se a variavel verificaLateralBraco foi mudada comeca o movimento para o outro lado
             {
                 anguloBracoX-=0.5;
                 if (anguloBracoX == -4.0)
                 {
                     anguloBracoX=0.0;
-                    verificaLateralBraco=false;
-                    controleBraco=false;
+                    verificaLateralBraco=false;//terminando o movimento nos dois lados seta como false ambas as variaveis de controle
+                    controleBraco=false;//terminando o movimento nos dois lados seta como false ambas as variaveis de controle
                 }
             }
         }
     }
     glutPostRedisplay();
-    glutTimerFunc(100, GirarBraco, 0);
+    glutTimerFunc(100, GirarBraco, 0);//Funcao espera 100 milissegundos antes de usar uma recursao com ela mesmo
 }
+//Simulacao de Tchau braco esquerdo
 void darTchau(int value)
 {
     if(controleBracoTchau==true)
     {
-        anguloBracoYTchau +=10.0;
-        anguloBracoZTchau= 5.0;
-        if(anguloBracoYTchau >= bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2)
+        anguloBracoYTchau +=10.0;//Atualiza a movimentacao em no eixo Y de 10 em 10
+        anguloBracoZTchau= raioEsfera;//Mantem o valor padrao em Z, para simular o movimento em torno da esfera
+        if(anguloBracoYTchau >= bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2)//Verifica se o braco em Y ja nao atingiu a posicao deseja com a movimentacao
         {
-            anguloBracoYTchau=bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2;
-            anguloBracoZTchau=0;
-            if(verificaLateralBraco== false)
+            anguloBracoYTchau=bracoInferiorY+raioEsfera*2+bracoSuperiorY+raioEsfera*2;//Se atingiu seta essa posicao desejada
+            anguloBracoZTchau=0;//Seta o movimento em Z=0, pois nao tem mais movimento em torna da esfera
+            if(verificaLateralBraco== false)//Se a lateral do braco eh false comeca a animacao de mover para os lados do braco esquerdo
             {
                 anguloBracoXTchau+=0.5;
-                if (anguloBracoXTchau >= 4.0)
+                if (anguloBracoXTchau >= 4.0)//Se atingiu o movimento em um lado muda a variavel verificaLateralBraco
                 {
                     anguloBracoXTchau=4.0;
                     verificaLateralBraco=true;;
                 }
             }
-            else if(verificaLateralBraco ==true)
+            else if(verificaLateralBraco ==true)//Se a variavel verificaLateralBraco foi mudada comeca o movimento para o outro lado
             {
                 anguloBracoXTchau-=0.5;
                 if (anguloBracoXTchau == -4.0)
                 {
                     anguloBracoXTchau=0.0;
-                    verificaLateralBraco=false;
-                    controleBracoTchau=false;
+                    verificaLateralBraco=false;//terminando o movimento nos dois lados seta como false ambas as variaveis de controle
+                    controleBracoTchau=false;//terminando o movimento nos dois lados seta como false ambas as variaveis de controle
                 }
             }
         }
     }
     glutPostRedisplay();
-    glutTimerFunc(100, darTchau, 0);
+    glutTimerFunc(100, darTchau, 0);//Funcao espera 100 milissegundos antes de usar uma recursao com ela mesmo
 }
 void GirarCabeca(int value)
 {
-    if (girandoCabecaEsquerda)
+    if (girandoCabecaEsquerda)//Verifica se a cabeca esta apta a girar pra esquerda
     {
-        anguloMovCabecaPescocoY += 3.0;
-        if (anguloMovCabecaPescocoY >= 50.0)
+        anguloMovCabecaPescocoY += 3.0;//Atualiza o movimento de girar a cabeca de 3 em 3
+        if (anguloMovCabecaPescocoY >= 50.0)//Se atingiu o valor desejado para um lado, seta ele e gira pro outro
         {
             anguloMovCabecaPescocoY = 50.0;
             girandoCabecaEsquerda = false;
@@ -223,14 +223,14 @@ void GirarCabeca(int value)
         }
     }
     glutPostRedisplay();
-    glutTimerFunc(33, GirarCabeca, 0);
+    glutTimerFunc(33, GirarCabeca, 0);//Funcao espera 33 milissegundos antes de usar uma recursao com ela mesmo
 }
 void GirarPescoco(int value)
 {
-    if (girandoPescocoTras)
+    if (girandoPescocoTras)//Verifica se o pescoco esta apto a girar pra tras
     {
-        anguloMovCabecaPescocoX += 3.0;
-        if (anguloMovCabecaPescocoX >= 35.0)
+        anguloMovCabecaPescocoX += 3.0;//Atualiza o movimento de girar a cabeca de 3 em 3
+        if (anguloMovCabecaPescocoX >= 35.0)//Se atingiu o valor desejado para um lado, seta ele e gira pro outro
         {
             anguloMovCabecaPescocoX = 35.0;
             girandoPescocoTras = false;
@@ -247,45 +247,53 @@ void GirarPescoco(int value)
         }
     }
     glutPostRedisplay();
-    glutTimerFunc(33, GirarPescoco, 0);
+    glutTimerFunc(33, GirarPescoco, 0);//Funcao espera 33 milissegundos antes de usar uma recursao com ela mesmo
 }
-//-------------------$ CAMINHADA $ -------------------
-void caminhadaManual(int valor)
+//Funcao que sera chamada quando o usuario iniciar uma caminhada manual, passo a passo do boneco
+
+void caminhadaManual(int valor)//valor que será incrementando conforme os passos para o movimento no eixo Z das pernas e do boneco
 {
-    anguloPernaSuperior = sin(valor * 0.1) * 3.5;  // Simula o movimento da perna esquerda
-    anguloPernaInferior = sin(valor * 0.1 + 3.14) * 40.0;  // Mantém a perna direita reta
-    anguloPernaSuperiorDireita = cos(valor * 0.1) * 3.5;  // Simula o movimento da perna esquerda
-    anguloPernaInferiorDireita = cos(valor * 0.1 + 3.14) * 40.0;  // Mantém a perna direita reta
-    posicaoAnimacaoZ += 5.0; // Ajuste a velocidade de movimento conforme necessário
-    glutPostRedisplay();
+    //Perna Esquerda usando seno e direita usando para simular a caminhada em diferentes fases, enquanto uma esta realizando um
+    //movimento na posicao da onda senoidal a outra esta realizando o inverso devido ao cosseno
+
+    //(valor *0.1) ou (valor*0.1+ 3.14) para que o movimento seja atualizado aos poucos
+    anguloPernaSuperior = sin(valor * 0.1) * 3.5;  // Simula o movimento da perna superior esquerda
+    anguloPernaInferior = sin(valor * 0.1 + 3.14) * 40.0;  // Simula o movimento da perna inferior esquerda
+    anguloPernaSuperiorDireita = cos(valor * 0.1) * 3.5; // Simula o movimento da perna superior direita
+    anguloPernaInferiorDireita = cos(valor * 0.1 + 3.14) * 40.0;  // Simula o movimento da perna inferior direita
+    posicaoAnimacaoZ += 5.0; // Ajuste do deslocamento do boneco no eixo Z
+    glutPostRedisplay();//Atualiza a animacao
 }
+//Atualiza a animacao da perna esquerda
 void AtualizarAnimacao(int value)
 {
-    // Atualiza o ângulo das pernas de acordo com o passo atual
-    if (caminhando)
+    if (caminhando)//Se caminhando eh setado como true comeca a simulacao de caminhada
     {
-        anguloPernaSuperior = sin(value * 0.1) * 0.5;  // Simula o movimento da perna esquerda
-        anguloPernaInferior = sin(value * 0.1 + 3.14) * 10.0;  // Mantém a perna direita reta
-        float t = 0.2 + 0.3 * sin(value * 0.03);
-        MovimentoPeZ = t;
-        posicaoAnimacaoZ += 0.05; // Ajuste a velocidade de movimento conforme necessário
+        anguloPernaSuperior = sin(value * 0.1) * 0.5;  // Simula o movimento da perna superior esquerda, com o uso de seno
+        anguloPernaInferior = sin(value * 0.1 + 3.14) * 10.0;  // Simula o movimento da perna inferior esquerda, com o uso de seno
+        float t = 0.2 + 0.3 * sin(value * 0.03);//Uso de seno
+        MovimentoPeZ = t;//Variavel para a movimentacao do pe esquerdo
+        posicaoAnimacaoZ += 0.05;  // Ajuste do deslocamento do boneco no eixo Z
     }
     glutPostRedisplay();
-    glutTimerFunc(15, AtualizarAnimacao, value + 1);
+    glutTimerFunc(15, AtualizarAnimacao, value + 1);//Funcao espera 15 milissegundos incrementa mais 1
+                                                    // antes de usar uma recursao com ela mesmo para que ocorra a atualizacao da animacao
 }
+//Atualiza a animacao da perna direita
 void AtualizarAnimacaoDireita(int value)
 {
-    if (caminhando)
+    if (caminhando)//Caminhando setado como true em ambas as funcoes de atualizar animacao comeca a simulacao da perna direita tambem
     {
-        anguloPernaSuperiorDireita = cos(value * 0.1) * 0.5;  // Simula o movimento da perna esquerda
-        anguloPernaInferiorDireita = cos(value * 0.1 + 3.14) * 10.0;  // Mantém a perna direita reta
-        float t = 0.2 + 0.3 * cos(value * 0.03);
-        MovimentoPeDireitaZ = t;
+        anguloPernaSuperiorDireita = cos(value * 0.1) * 0.5;  // Simula o movimento da perna superior direita, com o uso
+                                                            //de cosseno faz com que ambas as pernas fiquem em fase diferentes
+        anguloPernaInferiorDireita = cos(value * 0.1 + 3.14) * 10.0;  // Simula o movimento da perna inferior esquerda, com o uso de cosseno
+        float t = 0.2 + 0.3 * cos(value * 0.03);//Uso de cosseno
+        MovimentoPeDireitaZ = t;//Variavel para a movimentacao do pe direito
     }
     glutPostRedisplay();
-    glutTimerFunc(15, AtualizarAnimacaoDireita, value + 1);
+    glutTimerFunc(15, AtualizarAnimacaoDireita, value + 1);//Funcao espera 15 milissegundos incrementa mais 1
+                                                    // antes de usar uma recursao com ela mesmo para que ocorra a atualizacao da animacao
 }
-//-------------------^MOVIMENTACAO^-------------------
 void desenharCintura()
 {
     glColor3f(1.0, 1.0, 0.0);
@@ -299,7 +307,7 @@ void desenharPernaSuperior()
     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
         glScalef(pernaSuperiorX,pernaSuperiorY,tamanhoZ);
-        glTranslatef(0.0,0.0,MovimentoPeZ);
+        glTranslatef(0.0,0.0,MovimentoPeZ);//Simular o movimento da perna Superior esquerda em Z
          glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
@@ -309,58 +317,60 @@ void desenharPernaInferior()
     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
         glScalef(pernaInferiorX,pernaInferiorY, tamanhoZ);
-        glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
-        glTranslatef(0.0,0.0,MovimentoPeZ);
+        glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica rotação em X a parte inferior da perna
+        glTranslatef(0.0,0.0,MovimentoPeZ);//Simular o movimento do pe esquerdo em Z
         glutSolidCube(1.0);
     glPopMatrix();
 }
 void desenharPernaSuperiorDireita()
 {
-    glColor3f(0.5, 0.5, 1.0);
+     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
         glScalef(pernaSuperiorX,pernaSuperiorY,tamanhoZ);
-        glRotatef( anguloPernaSuperiorDireita , 1.0, 0.0, 0.0);
-        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        glRotatef( anguloPernaSuperiorDireita , 1.0, 0.0, 0.0);// Aplica rotação em X a parte inferior da perna
+        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);//Simular o movimento da perna Superior direita em Z
         glutSolidCube(1.0);
     glPopMatrix();
 }
 void desenharPernaInferiorDireita()
 {
-    glColor3f(0.5, 0.5, 1.0);
+     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
         glScalef(pernaInferiorX,pernaInferiorY, tamanhoZ);
-        glRotatef(anguloPernaInferiorDireita, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
-        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        glRotatef(anguloPernaInferiorDireita, 1.0, 0.0, 0.0); // Aplica rotação em X a parte inferior da perna
+        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);//Simular o movimento do pe direito em Z
         glutSolidCube(1.0);
     glPopMatrix();
 }
 void desenharInferiores()
 {
-    //----INFERIORES----
     //Perna Esquerda
-    glTranslatef(0.0,(bracoInferiorY/2+raioEsfera*2+bracoSuperiorY+raioEsfera),0.0);//Volta o eixo para o centro de massa da esfera ao lado da clavívula
+    glTranslatef(0.0,(bracoInferiorY/2+raioEsfera*2+bracoSuperiorY+raioEsfera),0.0);//Volta o eixo para o centro de massa da esfera ao lado
+                                                                                    // da clavívula
     glTranslatef(-(bracoInferiorX+claviculaX+troncoX/2),-(troncoY+cinturaY),0.0);//Posiciona para desenhar a cintura
     glTranslatef(-cinturaX/2,0.0,0.0);//Aqui arrasta o eixo do meio exato da cintura para a metade esquerda
     desenharCintura();
-    glTranslatef(-(cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);
+    glTranslatef(-(cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);//Translada para o centro da articulacao da perna esquerda
     desenharArticulacao();
-    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);//Translada para o meio da perna superior esquerda
     desenharPernaSuperior();
-    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);//Translada para o centro da articulacao inferior da perna esquerda
     desenharArticulacao();
-    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);//Translada para o meio da perna inferior esquerda
     desenharPernaInferior();
+
     //Perna Direita
-    glTranslatef(raioEsfera,(pernaInferiorY+raioEsfera*2+pernaSuperiorY+cinturaY),0.0);
-    glTranslatef(cinturaX,0.0,0.0);
+    glTranslatef(raioEsfera,(pernaInferiorY+raioEsfera*2+pernaSuperiorY+cinturaY),0.0);//Translada em X o raio da esfera e em Y volta para a
+                                                                                        //base da cintura
+    glTranslatef(cinturaX,0.0,0.0);//Translada para meio da cintura direita
     desenharCintura();
-    glTranslatef((cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);
+    glTranslatef((cinturaX/2-raioEsfera),-(cinturaY+raioEsfera/2),0.0);//Translada para o centro da articulacao da perna direita
     desenharArticulacao();
-    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);//Translada para o meio da perna superior direita
     desenharPernaSuperiorDireita();
-    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaSuperiorY/2),0.0);//Translada para o centro da articulacao inferior da perna direita
     desenharArticulacao();
-    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);
+    glTranslatef(0.0,-(raioEsfera+pernaInferiorY/2),0.0);//Translada para o meio da perna inferior direita
     desenharPernaInferiorDireita();
 }
 void desenharTronco()
@@ -375,8 +385,8 @@ void desenharPescoco()
 {
     glColor3f(1.0, 0.0, 0.0);
     glPushMatrix();
-        glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);
-        glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);
+        glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);//Rotacao do pescoco em Y, sendo incrementa ao chamar a funcao para girar o pescoco
+        glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);//Rotacao do pescoco em X, sendo incrementa ao chamar a funcao para girar o pescoco
         glScalef(pescocoX, pescocoY, tamanhoZ);
         glutSolidCube(1.0);
     glPopMatrix();
@@ -386,8 +396,10 @@ void desenharArticulacaoSuperiores()
 {
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
-        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
-         glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
+        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos
+        glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos para 'dar Tchau'
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
 }
@@ -395,7 +407,8 @@ void desenharArticulacaoSuperioresDireito()
 {
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
-        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
 }
@@ -403,7 +416,7 @@ void desenharArticulacao()
 {
     glPushMatrix();
         glColor3f(0.0,1.0,0.0);
-        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);
+        glTranslatef(0.0,0.0,MovimentoPeDireitaZ);//Simula a movimentacao do joelho do boneco, sendo incrementa ao chamar funcoes de caminhar
         glutSolidSphere(raioEsfera, 20, 20);
     glPopMatrix();
 }
@@ -419,9 +432,10 @@ void desenharBracoSuperior()
 {
     glColor3f(0.0, 1.0, 1.0);
     glPushMatrix();
-       glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
+       glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos
+        glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);//Usa o mesmo angulo da perna para simular o movimento dos bracos enquanto caminha
         glScalef(bracoSuperiorX, bracoSuperiorY, tamanhoZ);
-        glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -429,10 +443,11 @@ void desenharBracoSuperiorEsquerdo()
 {
     glColor3f(0.0, 1.0, 1.0);
     glPushMatrix();
-       glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
-       glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
+       glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos
+       glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);//Tranlacoes para atualizacao ao 'dar Tchau'
+        glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);//Usa o mesmo angulo da perna para simular o movimento dos bracos enquanto caminha
         glScalef(bracoSuperiorX, bracoSuperiorY, tamanhoZ);
-        glRotatef(anguloPernaSuperior, 1.0, 0.0, 0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -442,7 +457,7 @@ void desenharBracoInferior()
     glPushMatrix();
         glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
         glScalef(bracoInferiorX, bracoInferiorY, tamanhoZ);
-         glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
+         glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);//Usa o mesmo angulo da perna para simular o movimento dos bracos enquanto caminha
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -451,10 +466,11 @@ void desenharBracoInferiorEsquerdo()
 {
     glColor3f(0.0, 1.0, 1.0);
     glPushMatrix();
-        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);
-        glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);
+        glTranslatef(anguloBracoX,anguloBracoY,anguloBracoZ);//Translacao das articulacoes do ombro,
+                                                            //sendo incrementa ao chamar a funcao para movimentar os bracos
+        glTranslatef(anguloBracoXTchau,anguloBracoYTchau,anguloBracoZTchau);//Tranlacoes para atualizacao ao 'dar Tchau'
+        glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);//Usa o mesmo angulo da perna para simular o movimento dos bracos enquanto caminha
         glScalef(bracoInferiorX, bracoInferiorY, tamanhoZ);
-        glRotatef(anguloPernaInferior, 1.0, 0.0, 0.0);  // Aplica a rotação da perna
         glutSolidCube(1.0);
     glPopMatrix();
 }
@@ -462,25 +478,22 @@ void desenharCabeca()
 {
     glColor3f(1.0, 0.0, 1.0);
     glPushMatrix();
+        glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);//Rotacao incrementada em Y ao chamar funcao de movimentar cabeca
+        glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);//Rotacao incrementada em X ao chamar funcao de movimentar cabeca
         glScalef(cabecaX,cabecaY, cabecaZ);
-        glRotatef(anguloMovCabecaPescocoY,0.0,1.0,0.0);
-        glRotatef(anguloMovCabecaPescocoX,1.0,0.0,0.0);
         glutSolidCube(1.0);
     glPopMatrix();
 }
 void desenharSuperiores()
 {
-    glTranslatef(0,anguloPular,0);
-    //---TRONCO---
+    glTranslatef(0,anguloPular,0);//Caso ocorra o gesto de pular altera toda a posicao do boneco em Y
+
     desenharTronco();
-    glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);
-    //---ARTICULAÇÃO PESCOCO---
+    glTranslatef(0.0, (troncoY/2+raioEsfera), 0.0);//Tranlacao para o centro da esfera do pesco
     desenharArticulacao();
-    //---PESCOCO---
-    glTranslatef(0.0, (raioEsfera+pescocoY/2), 0.0);
+    glTranslatef(0.0, (raioEsfera+pescocoY/2), 0.0);//Translacao para a metade do pescoco
     desenharPescoco();
-    //---CABECA---
-    glTranslatef(0.0,(pescocoY/2+cabecaY/2),0.0);
+    glTranslatef(0.0,(pescocoY/2+cabecaY/2),0.0);//Translacao para a metade da cabeca
     desenharCabeca();
     //---------BRACO ESQUERDO---------
     //---Clavícula Esquerda---
